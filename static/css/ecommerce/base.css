@@ -1,0 +1,45 @@
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script&family=Poppins&display=swap');
+
+*,
+*::before,
+*::before {
+  box-sizing: border-box !important;
+}
+
+:root {
+  /* Colors */
+  --bg-primary: #ECF5F8;
+  --blue-primary: #0369A1;
+  --white-primary: #fff;
+  /* Fonts */
+  --dancing: "Dancing Script", cursive;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--bg-primary);
+}
+
+.goto__topButton {
+  position: fixed;
+  bottom: 1%;
+  right: -100vw;
+  transition: all 0.7s ease-in-out;
+}
+
+.goto__topButton.show__gotoTopBtn {
+  right: 1%;
+}
+
+.goto__topButton > svg {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+@media (max-width: 399px) {
+  .goto__topButton > svg {
+    width: 2rem;
+    height: 2rem;
+  }
+}

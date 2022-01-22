@@ -1,0 +1,683 @@
+{% load static %}
+{% load custom_filter %}
+
+<link rel="stylesheet" href="{% static 'css/ecommerce/navbar.css' %}" />
+
+<script src="{% static 'js/ecommerce/navbar.js' %}" defer></script>
+
+{% comment %}Cart sidebar section starts{% endcomment %}
+<section id="cart__bgOverlay" class="w-full h-screen hidden"></section>
+
+<section id="home__cart" class="bg-white shadow-lg h-screen z-20 p-3">
+  <div class="flex flex-col gap-y-3">
+    <section class="flex items-center justify-between border-b pb-2 border-gray-400 mb-3">
+      <h5 class="font-bold text-2xl text-slate-600">Cart</h5>
+      <div id="close__cart">
+        <span class="iconify cursor-pointer text-2xl text-slate-600 hover:text-rose-400" data-icon="ep:circle-close-filled"></span>
+      </div>
+    </section>
+    {% for c in cart_products %}
+    <section class="flex flex-col gap-y-2 overflow-x-hidden overflow-y-auto cart__sidebarSection">
+      <section class="flex flex-wrap justify-between items-center border-b border-gray-400 pb-2">
+        <div class="flex items-center gap-x-2">
+          <section class="w-16 h-16">
+            <img class="w-full h-full object-cover" src="{{ c.product_image.url }}" alt="">
+          </section>
+          <section class="flex flex-col gap-y-2">
+            <p class="font-bold">{{ c.product_name }}</p>
+            <div class="text-sm text-slate-600 flex items-center gap-x-2">
+              <p>{{ c|cart_quantity:request.session.cart }}</p>
+              <p>x</p>
+              {% if c.sale_price %}
+              <p class="text-sky-400 text-base font-bold">${{ c.sale_price }}</p>
+              {% else %}
+                <p class="text-sky-400 text-base font-bold">${{ c.regular_price }}</p>
+              {% endif %}
+            </div>
+          </section>
+        </div>
+        <div>
+          <form action="{% url 'deleteCart' %}" method="POST">
+              {% csrf_token %}
+              <input type="hidden" name="product_id" value={{ c.id }}>
+            <button type="submit">
+              <span class="iconify cursor-pointer text-xl text-slate-600 hover:text-rose-400" data-icon="bi:trash"></span>
+            </button>
+          </form>
+        </div>
+      </section>
+      {% endfor %}
+
+
+    </section>
+  </div>
+
+  <div class="absolute bg-white bottom-0 left-0 w-full px-3 py-5 border-t border-gray-400">
+    <section class="flex flex-col gap-y-2">
+      <section class="flex items-center justify-between mb-3">
+        <h5 class="font-bold text-2xl text-slate-600 uppercase">subtotal</h5>
+        <h5 class="font-bold text-2xl uppercase text-sky-400">${{ c|get_sub_total:request.session.cart }}</h5>
+      </section>
+      <section>
+        <a href="{% url 'cart' %}">
+          <button class="bg-sky-600 text-slate-200 w-full px-3 py-2 hover:shadow-md">View Cart</button>
+        </a>
+      </section>
+      <section>
+        <a href="#">
+          <button class="bg-green-600 text-slate-200 w-full px-3 py-2 hover:shadow-md">Checkout</button>
+        </a>
+      </section>
+    </section>
+  </div>
+</section>
+{% comment %}Cart sidebar section ends{% endcomment %}
+
+<section class="overflow-hidden">
+  {% comment %}Large screen navbar section starts{% endcomment %}
+  <div class="flex items-center justify-between px-5 bg-white navbar1">
+    <section class="cursor-pointer mobile__hamburger">
+      <span class="iconify text-2xl text-slate-600 hover:text-sky-400" data-icon="icon-park-outline:hamburger-button"></span>
+    </section>
+    <section class="py-2 hide__logoOnMobile">
+      <a href="#">
+        <img class="w-20 object-cover" src="{{ site.site_logo.url }}" />
+      </a>
+    </section>
+    <section class="navbar__middleSection">
+      <ul class="flex h-full items-center gap-x-4 font-bold text-slate-600">
+        <section class="py-2 mobile__logo">
+          <a href="#">
+            <img class="w-20 object-cover" src="{{ site.site_logo.url }}" />
+          </a>
+        </section>
+        <a href="{% url 'home' %}" class="h-full flex items-center hover:text-sky-400">
+          <li>Home</li>
+        </a>
+        <a
+          href="{% url 'shop' %}"
+          class="h-full flex items-center hover:text-sky-400 relative ecommerce__shop"
+        >
+          <li class="flex items-center gap-x-1">
+            Shop
+            <span class="iconify" data-icon="akar-icons:chevron-down"></span>
+          </li>
+        </a>
+        <a href="#" class="h-full flex items-center hover:text-sky-400">
+          <li>About Us</li>
+        </a>
+        <a href="#" class="h-full flex items-center hover:text-sky-400">
+          <li>Contact Us</li>
+        </a>
+      </ul>
+    </section>
+    <section class="flex items-center gap-x-5 relative navbar__rightSection">
+      <a href="#">
+        <span
+          class="iconify text-2xl text-slate-600 hover:text-sky-400"
+          data-icon="ant-design:user-outlined"
+        ></span>
+      </a>
+      <a href="{% url 'favourites' %}">
+        <div class="relative">
+          <span
+            class="iconify text-2xl text-slate-600 hover:text-sky-400"
+            data-icon="cil:heart"
+          ></span>
+          <p
+            class="
+              rounded-full
+              bg-rose-400
+              text-center text-sm text-slate-50
+              absolute
+              w-full
+              cart__amount
+            "
+          >
+            10
+          </p>
+        </div>
+      </a>
+      <div class="flex items-center h-full cursor-pointer">
+        <div class="relative cart__iconBtn">
+          <span
+            class="iconify text-2xl text-slate-600 hover:text-sky-400"
+            data-icon="ant-design:shopping-cart-outlined"
+          ></span>
+          <p
+            class="
+              rounded-full
+              bg-rose-400
+              text-center text-sm text-slate-50
+              absolute
+              w-full
+              cart__amount
+            "
+          >
+
+          </p>
+        </div>
+      </div>
+      <div class="cursor-pointer navbar__searchIcon">
+        <span
+          class="iconify text-2xl text-slate-600 hover:text-sky-400"
+          data-icon="carbon:search"
+        ></span>
+      </div>
+      <div
+        class="
+          navbar__searchField
+          absolute
+          top-0
+          h-full
+          w-80
+          opacity-0
+          invisible
+          flex
+          items-center
+          bg-white
+          transition-right
+          duration-300
+          ease-in-out
+        "
+      >
+        <form
+          method="GET"
+          class="
+            flex
+            items-center
+            border border-slate-400
+            p-1
+            shadow-sm
+            rounded-md
+            bg-slate-50
+            w-full
+          "
+        >
+          <span
+            class="iconify text-2xl text-slate-500"
+            data-icon="carbon:search"
+          ></span>
+          <input
+            type="text"
+            placeholder="Search..."
+            class="
+              outline-none
+              border-0
+              text-slate-500 text-sm
+              w-full
+              bg-transparent
+              navbar__searchInput
+            "
+          />
+        </form>
+      </div>
+    </section>
+  </div>
+  {% comment %}Large screen navbar section ends{% endcomment %}
+
+  {% comment %}Large screen Category section starts{% endcomment %}
+  <div class="px-5 py-2 border-t border-gray-300 bg-white shadow-md h-0	opacity-0 invisible transition-all duration-300 ease-in fixed left-0 z-50 overflow-x-hidden overflow-y-auto category__section">
+    <section class="flex flex-wrap gap-6">
+      <div class="text-slate-700">
+        <p class="font-bold mb-2">Category Name-1</p>
+        <ul class="text-sm">
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+        </ul>
+      </div>
+
+      {% comment %}Extra{% endcomment %}
+      <div class="text-slate-700">
+        <p class="font-bold mb-2">Category Name-1</p>
+        <ul class="text-sm">
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+        </ul>
+      </div>
+      <div class="text-slate-700">
+        <p class="font-bold mb-2">Category Name-1</p>
+        <ul class="text-sm">
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+        </ul>
+      </div>
+      <div class="text-slate-700">
+        <p class="font-bold mb-2">Category Name-1</p>
+        <ul class="text-sm">
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+        </ul>
+      </div>
+      <div class="text-slate-700">
+        <p class="font-bold mb-2">Category Name-1</p>
+        <ul class="text-sm">
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+        </ul>
+      </div>
+      <div class="text-slate-700">
+        <p class="font-bold mb-2">Category Name-1</p>
+        <ul class="text-sm">
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+        </ul>
+      </div>
+      <div class="text-slate-700">
+        <p class="font-bold mb-2">Category Name-1</p>
+        <ul class="text-sm">
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+        </ul>
+      </div>
+      <div class="text-slate-700">
+        <p class="font-bold mb-2">Category Name-1</p>
+        <ul class="text-sm">
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+        </ul>
+      </div>
+      <div class="text-slate-700">
+        <p class="font-bold mb-2">Category Name-1</p>
+        <ul class="text-sm">
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+        </ul>
+      </div>
+      <div class="text-slate-700">
+        <p class="font-bold mb-2">Category Name-1</p>
+        <ul class="text-sm">
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+        </ul>
+      </div>
+      <div class="text-slate-700">
+        <p class="font-bold mb-2">Category Name-1</p>
+        <ul class="text-sm">
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+        </ul>
+      </div>
+      <div class="text-slate-700">
+        <p class="font-bold mb-2">Category Name-1</p>
+        <ul class="text-sm">
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+        </ul>
+      </div>
+      <div class="text-slate-700">
+        <p class="font-bold mb-2">Category Name-1</p>
+        <ul class="text-sm">
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+        </ul>
+      </div>
+      <div class="text-slate-700">
+        <p class="font-bold mb-2">Category Name-1</p>
+        <ul class="text-sm">
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+        </ul>
+      </div>
+      <div class="text-slate-700">
+        <p class="font-bold mb-2">Category Name-1</p>
+        <ul class="text-sm">
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+        </ul>
+      </div>
+      <div class="text-slate-700">
+        <p class="font-bold mb-2">Category Name-1</p>
+        <ul class="text-sm">
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+        </ul>
+      </div>
+      <div class="text-slate-700">
+        <p class="font-bold mb-2">Category Name-1</p>
+        <ul class="text-sm">
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+        </ul>
+      </div>
+      <div class="text-slate-700">
+        <p class="font-bold mb-2">Category Name-1</p>
+        <ul class="text-sm">
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+        </ul>
+      </div>
+      <div class="text-slate-700">
+        <p class="font-bold mb-2">Category Name-1</p>
+        <ul class="text-sm">
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+        </ul>
+      </div>
+      <div class="text-slate-700">
+        <p class="font-bold mb-2">Category Name-1</p>
+        <ul class="text-sm">
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+        </ul>
+      </div>
+      <div class="text-slate-700">
+        <p class="font-bold mb-2">Category Name-1</p>
+        <ul class="text-sm">
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+            <a href="#" class="hover:text-sky-400">
+                <li class="py-0.5">Subcat-1</li>
+            </a>
+        </ul>
+      </div>
+    </section>
+  </div>
+  {% comment %}Large screen Category section ends{% endcomment %}
+
+  {% comment %}Mobile navbar section starts{% endcomment %}
+
+  <section id="bg__overlay"></section>
+  <section class="mobile__navSidebar">
+      <div class="navbar2 bg-white px-5 py-3 h-full flex flex-col">
+        <ul>
+            <a href="#">
+              <img class="w-full h-28 object-cover border-b pb-2 border-gray-400" src="{% static 'testImg/ecommerceLogo.jpg' %}" />
+            </a>
+            <section class="py-2 overflow-x-hidden overflow-y-auto mobile__navbarOptions">
+              <a href="{% url 'home' %}" class="text-slate-800 hover:text-black">
+                <li class="py-2 font-bold">Home</li>
+              </a>
+              <a href="{% url 'shop' %}" class="text-slate-800 hover:text-black">
+                <li class="font-bold py-2 flex items-center gap-x-1">Shop</li>
+              </a>
+              <a href="{% url 'favourites' %}" class="flex items-center gap-x-1 py-2 h-full text-slate-800 hover:text-black">
+                <span class="font-bold">Wishlist</span>
+                <div class="relative">
+                  <span
+                    class="iconify text-2xl text-slate-600 hover:text-sky-400"
+                    data-icon="cil:heart"
+                  ></span>
+                  <p
+                    class="
+                      rounded-full
+                      bg-rose-400
+                      text-center text-sm text-slate-50
+                      absolute
+                      w-full
+                      cart__amount
+                    "
+                  >
+                    10
+                  </p>
+                </div>
+              </a>
+              <a href="{% url 'cart' %}" class="flex items-center gap-x-1 py-2 h-full text-slate-800 hover:text-black">
+                <span class="font-bold">Cart</span>
+                <div class="relative">
+                  <span
+                    class="iconify text-2xl text-slate-600 hover:text-sky-400"
+                    data-icon="ant-design:shopping-cart-outlined"
+                  ></span>
+                  <p
+                    class="
+                      rounded-full
+                      bg-rose-400
+                      text-center text-sm text-slate-50
+                      absolute
+                      w-full
+                      cart__amount
+                    "
+                  >
+                    10
+                  </p>
+                </div>
+              </a>
+              <a href="#" class="text-slate-800 hover:text-black">
+                <li class="font-bold py-2">Account</li>
+              </a>
+              <a href="#" class="text-slate-800 hover:text-black">
+                <li class="font-bold py-2">About Us</li>
+              </a>
+              <a href="#" class="text-slate-800 hover:text-black">
+                <li class="font-bold py-2">Contact Us</li>
+              </a>
+            </section>
+        </ul>
+      </div>
+  </section>
+  {% comment %}Mobile navbar section end{% endcomment %}
+
+
+</section>

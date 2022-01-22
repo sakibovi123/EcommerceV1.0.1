@@ -1,0 +1,50 @@
+{% extends 'ecommerce/base.html' %}
+{% load static %}
+
+{% block content %}
+
+{% comment %}Jquery{% endcomment %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+{% comment %}Slick js{% endcomment %}
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js" defer></script>
+
+{% comment %}Custom{% endcomment %}
+<link rel="stylesheet" href="{% static 'css/ecommerce/home.css' %}">
+<script src="{% static 'js/ecommerce/home.js' %}" defer></script>
+
+<section>
+    {% comment %}Home banner section starts{% endcomment %}
+    <div>
+        {% include "ecommerce/homeSlider.html" %}
+    </div>
+    {% comment %}Home banner section ends{% endcomment %}
+
+    {% comment%} Home categories section starts {% endcomment %}
+    <div class="my-20">
+        <h5 class="font-bold pl-5 mb-3 text-2xl text-slate-600">All Categories</h5>
+        {% include "ecommerce/homeCategories.html" %}
+    </div>
+    {% comment %} Home categories section ends {% endcomment %}
+
+    {% comment %}Home product tab section starts{% endcomment %}
+    <div class="my-20">
+        {% include "ecommerce/homeProducts.html" %}
+    </div>
+    {% comment %}Home product tab section ends{% endcomment %}
+
+    {% comment %}Daily deal section starts{% endcomment %}
+    <div>
+        {% include "ecommerce/homeDailyDeal.html" %}
+    </div>
+    {% comment %}Daily deal section ends{% endcomment %}
+
+    {% comment %}Service section starts{% endcomment %}
+    <div>
+        {% include "ecommerce/homeService.html" %}
+    </div>
+    {% comment %}Service section ends{% endcomment %}
+</section>
+
+{% endblock %}

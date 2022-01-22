@@ -1,0 +1,26 @@
+{% load static %}
+
+<div class="category__homeSlider">
+    {% if cats %}
+    {% for c in cats %}
+    <section class="w-60 overflow-hidden category__showSection">
+        <a href="{% url 'CategorywiseProducts' c.id %}">
+            <div class="w-full h-40">
+                <img class="w-full h-full object-cover" src="{{ c.category_image.url }}" alt="No Image">
+            </div>
+        </a>
+        <div class="flex justify-between mt-2">
+            <a href="#">
+                <p class="text-lg font-bold">{{ c.category_name }}</p>
+            </a>
+            <section class="category__content flex items-center whitespace-nowrap">
+                <a href="#" class="text-slate-500 flex items-center gap-x-1 transition-all duration-300 ease-in-out cat__viewAll">View All <span class="iconify" data-icon="bi:arrow-right"></span></a>
+                <p class="text-slate-500 transition-all duration-300 ease-in-out category__productNumber">{{ c.product_set.count }} products</p>
+            </section>
+        </div>
+    </section>
+    {% endfor %}
+    {% else %}{% endif %}
+
+
+</div>

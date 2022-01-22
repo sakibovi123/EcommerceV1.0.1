@@ -1,0 +1,44 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/ecommerce/base.css' %}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
+    <title>{{ site.site_title }}</title>
+</head>
+<body>
+    {% include "ecommerce/navbar.html" %}
+    {% block content %}{% endblock %}
+    {% include "ecommerce/footer.html" %}
+
+    <section class="goto__topButton cursor-pointer z-30">
+        <span class="iconify text-sky-500 hover:text-green-500" data-icon="bi:arrow-up-circle-fill"></span>
+    </section>
+
+    <script>
+        const topButton = document.querySelector(".goto__topButton");
+
+        window.addEventListener("scroll", (e) => {
+            if (window.pageYOffset < 10) {
+                topButton.classList.remove("show__gotoTopBtn");
+            }
+            else if (window.pageYOffset > 10) {
+                topButton.classList.add("show__gotoTopBtn");
+            }
+        });
+
+        topButton.addEventListener("click", () => {
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: "smooth"
+            });
+        })
+    </script>
+</body>
+</html>

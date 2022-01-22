@@ -1,0 +1,961 @@
+{% extends "ecommerce/base.html" %}
+{% load static %}
+
+
+{% block content %}
+
+<script src="{% static 'js/ecommerce/shop.js' %}" defer></script>
+<script src="{% static 'js/ecommerce/quickView.js' %}" defer></script>
+
+<link rel="stylesheet" href="{% static 'css/ecommerce/shop.css' %}">
+<link rel="stylesheet" href="{% static 'css/ecommerce/home.css' %}">
+
+<div>
+    {% comment %}Quick view section starts{% endcomment %}
+    <section id="quick__viewOverlay" class="w-full h-screen"></section>
+    
+    <section class="quick__viewModal hidden fixed top-0 left-0 w-full h-screen z-20">
+        <section class="bg-white quick__viewModalCard">
+            <div id="close__quickModal" class="cursor-pointer">
+                <span class="iconify text-xl text-slate-600 hover:text-rose-400" data-icon="ep:circle-close-filled"></span>
+            </div>
+            <div class="flex gap-x-2">
+                <section class="w-1/2 flex-1 quick__viewImageSection">
+                    <img class="w-full h-full object-cover" src="{% static 'testImg/product.jpg' %}" alt="">
+                </section>
+    
+                <section class="px-3 py-4 flex-1 overflow-y-auto quick__viewModalCardContent">
+                    <div class="flex flex-wrap items-center gap-4">
+                        <p class="line-through text-slate-600">$150</p>
+                        <p class="text-2xl text-sky-600 font-bold">$100</p>
+                    </div>
+    
+                    <div class="py-3">
+                        <p class="text-slate-600 text-sm">Assumenda qui at vel est rem qui. Id facilis aliquam velit ut. Quis aut suscipit fugiat officiis alias sint. Aut velit animi expedita deserunt voluptate soluta quasi molestiae.
+                    </div>
+
+                    <div>
+                        <h5 class="border-b border-gray-400 pb-2 font-bold mb-3">Colors</h5>
+    
+                        <form class="flex flex-wrap gap-2 items-center">
+                            <button class="w-6 h-6 border border-gray-400 hover:shadow-md" style="background-color: red;"></button>
+                            <button class="w-6 h-6 border border-gray-400 hover:shadow-md" style="background-color: black;"></button>
+                            <button class="w-6 h-6 border border-gray-400 hover:shadow-md" style="background-color: blue;"></button>
+                            <button class="w-6 h-6 border border-gray-400 hover:shadow-md" style="background-color: yellow;"></button>
+                            <button class="w-6 h-6 border border-gray-400 hover:shadow-md" style="background-color: purple;"></button>
+                        </form>
+                    </div>
+    
+                    <div class="mt-3">
+                        <h5 class="border-b border-gray-400 pb-2 font-bold mb-3">Size</h5>
+    
+                        <form class="flex flex-wrap gap-2 items-center">
+                            <button type="submit" class="border border-gray-400 px-2 py-1 text-sm hover:shadow-md">Extra Large</button>
+                            <button type="submit" class="border border-gray-400 px-2 py-1 text-sm hover:shadow-md">Large</button>
+                            <button type="submit" class="border border-gray-400 px-2 py-1 text-sm hover:shadow-md">Medium</button>
+                            <button type="submit" class="border border-gray-400 px-2 py-1 text-sm hover:shadow-md">Small</button>
+                            <button type="submit" class="border border-gray-400 px-2 py-1 text-sm hover:shadow-md">Extra Small</button>
+                        </form>
+                    </div>
+    
+                    <div class="py-4">
+                        <form action="" class="flex flex-wrap items-center justify-between gap-2 quick__modalFormSection">
+                            <input type="number" class="border border-gray-400 px-3 py-2 w-40 outline-none quick__productQty" value="1" min="1">
+                            <button class="bg-rose-500 flex-1 hover:shadow-lg px-4 py-2 text-slate-200 flex items-center gap-x-1"><span class="iconify" data-icon="ant-design:shopping-cart-outlined"></span> Add to cart</button>
+                        </form>
+                    </div>
+    
+                    <div class="py-4">
+                        <form action="">
+                            <button class="flex items-center gap-x-1 text-slate-600 hover:text-rose-400 transition-color duration-300 ease-in-out">
+                                <span
+                                    class="iconify"
+                                    data-icon="cil:heart"
+                                ></span> Add to wishlist
+                            </button>
+                        </form>
+                    </div>
+    
+                    <div class="text-sm border-t border-gray-400 pt-4">
+                        <p><span class="font-semibold text-slate-600">SKU:</span> enormous-wooden-gloves-11568216</p>
+                        <p><span class="font-semibold text-slate-600">Categories:</span> Pillars, Tea Lights</p>
+                        <p><span class="font-semibold text-slate-600">Tags:</span> Gift Sets, Scent</p>
+                    </div>
+                </section>
+            </div>
+        </section>
+    </section>
+    {% comment %}Quick view section ends{% endcomment %}
+    
+    <section class="w-full bg-no-repeat bg-center relative bg-cover shop__bgSection mb-10">
+        <section class="flex flex-col items-center absolute">
+            <h5 class="font-bold text-4xl mb-4">You search for "search text here"</h5>
+            <div class="flex items-center gap-x-1 text-sm">
+                <a href="{% url 'home' %}" class="flex items-center gap-x-1 text-slate-600"><span class="iconify" data-icon="ant-design:home-outlined"></span> Home <span class="iconify" data-icon="akar-icons:chevron-right"></span></a>
+                <a href="{% url 'shop' %}" class="flex items-center gap-x-1 text-slate-600"><span class="iconify" data-icon="iconoir:shop-alt"></span> Shop <span class="iconify" data-icon="akar-icons:chevron-right"></span></a>
+                <p class="text-slate-800">Search text here</p>
+            </div>
+        </section>
+    </section>
+
+    <section class="gap-x-2 px-5 shop__content">
+        <div>
+            <section class="hidden mb-3 font-bold text-lg mobile__filter">
+                <div class="cursor-pointer flex items-center gap-x-1">
+                    <span class="iconify" data-icon="ep:filter"></span> Filter
+                </div>
+            </section>
+
+            <div class="w-full h-screen fixed top-0 left-0 z-10 hidden shop__bgOverlay"></div>
+
+            <div class="flex flex-col gap-y-5 shop__leftSection">
+                <section class="hidden justify-end mb-3 hide__filterButton">
+                    <div class="flex items-center flex items-center gap-x-1 cursor-pointer hover:text-rose-400">
+                        <span class="iconify" data-icon="ep:circle-close"></span> Hide Filter
+                    </div>
+                </section>
+
+                {% if categories|length > 0 %}
+                <section>
+                    <h5 class="font-bold border-b border-gray-400 pb-2 mb-5">Product Categories</h5>
+                    <div class="flex flex-col gap-y-2">
+                        {% for cat in categories %}
+                        <a href="#" class="text-slate-700 hover:text-sky-400">{{ cat.category_name }}</a>
+                        {% endfor %}
+                    </div>
+                </section>
+                {% endif %}
+                <section>
+                    <h5 class="font-bold border-b border-gray-400 pb-2 mb-5">Filter By Price</h5>
+
+                    <div>
+                        {% comment %}Pass the min and max price here{% endcomment %}
+                        {% comment %} value="min_value" {% endcomment %}
+                        <input type="range" min="{{ min_price }}" max="{{ max_price }}" value="{{ max_price }}" oninput="priceRange(this)">
+                        
+                        <form class="flex flex-wrap items-center justify-between gap-2">
+                            <div class="flex items-center gap-x-2">
+                                <p class="text-slate-600">Price:</p>
+                                {% comment %}Min value{% endcomment %}
+                                <p id="min__price">${{ min_price }}</p>
+                                <p>-</p>
+                                {% comment %}Max value{% endcomment %}
+                                <p id="max__price">${{ max_price }}</p>
+                            </div>
+
+                            <button class="px-3 py-1 text-sm text-white bg-sky-500" type="submit">
+                                Filter
+                            </button>
+                        </form>
+                    </div>
+                </section>
+
+                {% if colors|length > 0 %}
+                <section>
+                    <h5 class="font-bold border-b border-gray-400 pb-2 mb-5">Filter By Color</h5>
+
+                    <form class="flex items-center flex-wrap gap-2 filtered__colors">
+                        {% for color in colors %}
+                        <button id="color-{{ color.color_name }}" type="submit" class="w-6 h-6 border border-gray-400 hover:shadow-md"></button>
+                        {% endfor %}
+                    </form>
+                </section>
+                {% endif %}
+
+                {% if sizes|length > 0 %}
+                <section>
+                    <h5 class="font-bold border-b border-gray-400 pb-2 mb-5">Filter By Size</h5>
+
+                    <form action="" class="flex flex-wrap items-center gap-2">
+                        {% for size in sizes %}
+                        <button type="submit" class="border border-gray-400 px-2 py-1 text-sm hover:shadow-md">{{ size.size_name }}</button>
+                        {% endfor %}
+                    </form>
+                </section>
+                {% endif %}
+            </div>
+        </div>
+        <div>
+            <section class="flex flex-wrap justify-center gap-4">
+                <section class="w-72 product__card relative p-5 pb-3 hover:shadow-lg hover:bg-white transition-all duration-300 ease-in-out overflow-x-hidden"  id="home__product1">
+                    <div class="relative">
+                        <a href="#">
+                            <section class="tab__productImg w-full h-60">
+                                <img class="w-full h-full object-cover shop__prodImg" data-src="{% static 'testImg/product.jpg' %}" alt="">
+                            </section>
+                        </a>
+    
+                        <section class="absolute product__options">
+                            <div class="flex items-center justify-center gap-x-2">
+                                <section onclick="quickView(1)" class="opacity-0 transition-all duration-300 ease-in-out quick__viewBtn">
+                                    <section class="relative bg-slate-800 px-3 py-2 hover:bg-rose-400 cursor-pointer product__option">
+                                        <span class="iconify text-slate-200 text-2xl" data-icon="bi:eye"></span>
+                                        <div class="absolute product__quickOptionContent product__quickOptionContent1 opacity-0 bg-slate-700 px-3 py-1 rounded-sm transition-opacity duration-300 ease-in-out">
+                                            <p class="text-sm text-slate-200 whitespace-nowrap">Quick View</p>
+                                            <i class="product__optionArrow product__optionArrow1 bg-slate-700 border-slate-700"></i>
+                                        </div>
+                                    </section>
+                                </section>
+                                <section class="opacity-0 transition-all duration-300 ease-in-out">
+                                    <form action="">
+                                        <button class="relative bg-slate-800 px-3 py-2 hover:bg-rose-400 cursor-pointer product__option">
+                                            <span
+                                                class="iconify text-slate-200 text-2xl"
+                                                data-icon="cil:heart"
+                                            ></span>
+                                            <div class="absolute product__quickOptionContent product__quickOptionContent2 opacity-0 bg-slate-700 px-3 py-1 rounded-sm transition-opacity duration-300 ease-in-out">
+                                                <p class="text-sm text-slate-200 whitespace-nowrap">Add to wishlist</p>
+                                                <i class="product__optionArrow product__optionArrow2 bg-slate-700 border-slate-700"></i>
+                                            </div>
+                                        </button>
+                                    </form>
+                                </section>
+                            </div>
+                        </section>
+                    </div>
+    
+                    <div class="mt-4">
+                        <a href="#">
+                            <p class="font-bold">Gorgeous Wooden Gloves</p>
+                        </a>
+                        <section class="flex items-center tab__productContent mt-1">
+                            <form action="" class="text-slate-700 hover:text-sky-600 cursor-pointer transition-all duration-300 ease-in-out">
+                                <button type="submit" class="flex items-center gap-x-1">
+                                    <span class="iconify" data-icon="ant-design:shopping-cart-outlined"></span>
+                                    Add to cart
+                                </button>
+                            </form>
+                            <div class="flex items-center gap-x-2 transition-all duration-300 ease-in-out">
+                            <p class=" text-slate-500 text-sm line-through">$75.00</p>
+                            <p class="text-slate-700">$65.00</p>
+                        </div>
+                        </section>
+                    </div>
+                </section>
+    
+                {% comment %}Extra product section starts{% endcomment %}
+                <section class="w-72 product__card relative p-5 pb-3 hover:shadow-lg hover:bg-white transition-all duration-300 ease-in-out overflow-x-hidden"  id="home__product1">
+                    <div class="relative">
+                        <a href="#">
+                            <section class="tab__productImg w-full h-60">
+                                <img class="w-full h-full object-cover shop__prodImg" data-src="{% static 'testImg/product.jpg' %}" alt="">
+                            </section>
+                        </a>
+    
+                        <section class="absolute product__options">
+                            <div class="flex items-center justify-center gap-x-2">
+                                <section onclick="quickView(1)" class="opacity-0 transition-all duration-300 ease-in-out quick__viewBtn">
+                                    <section class="relative bg-slate-800 px-3 py-2 hover:bg-rose-400 cursor-pointer product__option">
+                                        <span class="iconify text-slate-200 text-2xl" data-icon="bi:eye"></span>
+                                        <div class="absolute product__quickOptionContent product__quickOptionContent1 opacity-0 bg-slate-700 px-3 py-1 rounded-sm transition-opacity duration-300 ease-in-out">
+                                            <p class="text-sm text-slate-200 whitespace-nowrap">Quick View</p>
+                                            <i class="product__optionArrow product__optionArrow1 bg-slate-700 border-slate-700"></i>
+                                        </div>
+                                    </section>
+                                </section>
+                                <section class="opacity-0 transition-all duration-300 ease-in-out">
+                                    <form action="">
+                                        <button class="relative bg-slate-800 px-3 py-2 hover:bg-rose-400 cursor-pointer product__option">
+                                            <span
+                                                class="iconify text-slate-200 text-2xl"
+                                                data-icon="cil:heart"
+                                            ></span>
+                                            <div class="absolute product__quickOptionContent product__quickOptionContent2 opacity-0 bg-slate-700 px-3 py-1 rounded-sm transition-opacity duration-300 ease-in-out">
+                                                <p class="text-sm text-slate-200 whitespace-nowrap">Add to wishlist</p>
+                                                <i class="product__optionArrow product__optionArrow2 bg-slate-700 border-slate-700"></i>
+                                            </div>
+                                        </button>
+                                    </form>
+                                </section>
+                            </div>
+                        </section>
+                    </div>
+    
+                    <div class="mt-4">
+                        <a href="#">
+                            <p class="font-bold">Gorgeous Wooden Gloves</p>
+                        </a>
+                        <section class="flex items-center tab__productContent mt-1">
+                            <form action="" class="text-slate-700 hover:text-sky-600 cursor-pointer transition-all duration-300 ease-in-out">
+                                <button type="submit" class="flex items-center gap-x-1">
+                                    <span class="iconify" data-icon="ant-design:shopping-cart-outlined"></span>
+                                    Add to cart
+                                </button>
+                            </form>
+                            <div class="flex items-center gap-x-2 transition-all duration-300 ease-in-out">
+                            <p class=" text-slate-500 text-sm line-through">$75.00</p>
+                            <p class="text-slate-700">$65.00</p>
+                        </div>
+                        </section>
+                    </div>
+                </section>
+                <section class="w-72 product__card relative p-5 pb-3 hover:shadow-lg hover:bg-white transition-all duration-300 ease-in-out overflow-x-hidden"  id="home__product1">
+                    <div class="relative">
+                        <a href="#">
+                            <section class="tab__productImg w-full h-60">
+                                <img class="w-full h-full object-cover shop__prodImg" data-src="{% static 'testImg/product.jpg' %}" alt="">
+                            </section>
+                        </a>
+    
+                        <section class="absolute product__options">
+                            <div class="flex items-center justify-center gap-x-2">
+                                <section onclick="quickView(1)" class="opacity-0 transition-all duration-300 ease-in-out quick__viewBtn">
+                                    <section class="relative bg-slate-800 px-3 py-2 hover:bg-rose-400 cursor-pointer product__option">
+                                        <span class="iconify text-slate-200 text-2xl" data-icon="bi:eye"></span>
+                                        <div class="absolute product__quickOptionContent product__quickOptionContent1 opacity-0 bg-slate-700 px-3 py-1 rounded-sm transition-opacity duration-300 ease-in-out">
+                                            <p class="text-sm text-slate-200 whitespace-nowrap">Quick View</p>
+                                            <i class="product__optionArrow product__optionArrow1 bg-slate-700 border-slate-700"></i>
+                                        </div>
+                                    </section>
+                                </section>
+                                <section class="opacity-0 transition-all duration-300 ease-in-out">
+                                    <form action="">
+                                        <button class="relative bg-slate-800 px-3 py-2 hover:bg-rose-400 cursor-pointer product__option">
+                                            <span
+                                                class="iconify text-slate-200 text-2xl"
+                                                data-icon="cil:heart"
+                                            ></span>
+                                            <div class="absolute product__quickOptionContent product__quickOptionContent2 opacity-0 bg-slate-700 px-3 py-1 rounded-sm transition-opacity duration-300 ease-in-out">
+                                                <p class="text-sm text-slate-200 whitespace-nowrap">Add to wishlist</p>
+                                                <i class="product__optionArrow product__optionArrow2 bg-slate-700 border-slate-700"></i>
+                                            </div>
+                                        </button>
+                                    </form>
+                                </section>
+                            </div>
+                        </section>
+                    </div>
+    
+                    <div class="mt-4">
+                        <a href="#">
+                            <p class="font-bold">Gorgeous Wooden Gloves</p>
+                        </a>
+                        <section class="flex items-center tab__productContent mt-1">
+                            <form action="" class="text-slate-700 hover:text-sky-600 cursor-pointer transition-all duration-300 ease-in-out">
+                                <button type="submit" class="flex items-center gap-x-1">
+                                    <span class="iconify" data-icon="ant-design:shopping-cart-outlined"></span>
+                                    Add to cart
+                                </button>
+                            </form>
+                            <div class="flex items-center gap-x-2 transition-all duration-300 ease-in-out">
+                            <p class=" text-slate-500 text-sm line-through">$75.00</p>
+                            <p class="text-slate-700">$65.00</p>
+                        </div>
+                        </section>
+                    </div>
+                </section>
+                <section class="w-72 product__card relative p-5 pb-3 hover:shadow-lg hover:bg-white transition-all duration-300 ease-in-out overflow-x-hidden"  id="home__product1">
+                    <div class="relative">
+                        <a href="#">
+                            <section class="tab__productImg w-full h-60">
+                                <img class="w-full h-full object-cover shop__prodImg" data-src="{% static 'testImg/product.jpg' %}" alt="">
+                            </section>
+                        </a>
+    
+                        <section class="absolute product__options">
+                            <div class="flex items-center justify-center gap-x-2">
+                                <section onclick="quickView(1)" class="opacity-0 transition-all duration-300 ease-in-out quick__viewBtn">
+                                    <section class="relative bg-slate-800 px-3 py-2 hover:bg-rose-400 cursor-pointer product__option">
+                                        <span class="iconify text-slate-200 text-2xl" data-icon="bi:eye"></span>
+                                        <div class="absolute product__quickOptionContent product__quickOptionContent1 opacity-0 bg-slate-700 px-3 py-1 rounded-sm transition-opacity duration-300 ease-in-out">
+                                            <p class="text-sm text-slate-200 whitespace-nowrap">Quick View</p>
+                                            <i class="product__optionArrow product__optionArrow1 bg-slate-700 border-slate-700"></i>
+                                        </div>
+                                    </section>
+                                </section>
+                                <section class="opacity-0 transition-all duration-300 ease-in-out">
+                                    <form action="">
+                                        <button class="relative bg-slate-800 px-3 py-2 hover:bg-rose-400 cursor-pointer product__option">
+                                            <span
+                                                class="iconify text-slate-200 text-2xl"
+                                                data-icon="cil:heart"
+                                            ></span>
+                                            <div class="absolute product__quickOptionContent product__quickOptionContent2 opacity-0 bg-slate-700 px-3 py-1 rounded-sm transition-opacity duration-300 ease-in-out">
+                                                <p class="text-sm text-slate-200 whitespace-nowrap">Add to wishlist</p>
+                                                <i class="product__optionArrow product__optionArrow2 bg-slate-700 border-slate-700"></i>
+                                            </div>
+                                        </button>
+                                    </form>
+                                </section>
+                            </div>
+                        </section>
+                    </div>
+    
+                    <div class="mt-4">
+                        <a href="#">
+                            <p class="font-bold">Gorgeous Wooden Gloves</p>
+                        </a>
+                        <section class="flex items-center tab__productContent mt-1">
+                            <form action="" class="text-slate-700 hover:text-sky-600 cursor-pointer transition-all duration-300 ease-in-out">
+                                <button type="submit" class="flex items-center gap-x-1">
+                                    <span class="iconify" data-icon="ant-design:shopping-cart-outlined"></span>
+                                    Add to cart
+                                </button>
+                            </form>
+                            <div class="flex items-center gap-x-2 transition-all duration-300 ease-in-out">
+                            <p class=" text-slate-500 text-sm line-through">$75.00</p>
+                            <p class="text-slate-700">$65.00</p>
+                        </div>
+                        </section>
+                    </div>
+                </section>
+                <section class="w-72 product__card relative p-5 pb-3 hover:shadow-lg hover:bg-white transition-all duration-300 ease-in-out overflow-x-hidden"  id="home__product1">
+                    <div class="relative">
+                        <a href="#">
+                            <section class="tab__productImg w-full h-60">
+                                <img class="w-full h-full object-cover shop__prodImg" data-src="{% static 'testImg/product.jpg' %}" alt="">
+                            </section>
+                        </a>
+    
+                        <section class="absolute product__options">
+                            <div class="flex items-center justify-center gap-x-2">
+                                <section onclick="quickView(1)" class="opacity-0 transition-all duration-300 ease-in-out quick__viewBtn">
+                                    <section class="relative bg-slate-800 px-3 py-2 hover:bg-rose-400 cursor-pointer product__option">
+                                        <span class="iconify text-slate-200 text-2xl" data-icon="bi:eye"></span>
+                                        <div class="absolute product__quickOptionContent product__quickOptionContent1 opacity-0 bg-slate-700 px-3 py-1 rounded-sm transition-opacity duration-300 ease-in-out">
+                                            <p class="text-sm text-slate-200 whitespace-nowrap">Quick View</p>
+                                            <i class="product__optionArrow product__optionArrow1 bg-slate-700 border-slate-700"></i>
+                                        </div>
+                                    </section>
+                                </section>
+                                <section class="opacity-0 transition-all duration-300 ease-in-out">
+                                    <form action="">
+                                        <button class="relative bg-slate-800 px-3 py-2 hover:bg-rose-400 cursor-pointer product__option">
+                                            <span
+                                                class="iconify text-slate-200 text-2xl"
+                                                data-icon="cil:heart"
+                                            ></span>
+                                            <div class="absolute product__quickOptionContent product__quickOptionContent2 opacity-0 bg-slate-700 px-3 py-1 rounded-sm transition-opacity duration-300 ease-in-out">
+                                                <p class="text-sm text-slate-200 whitespace-nowrap">Add to wishlist</p>
+                                                <i class="product__optionArrow product__optionArrow2 bg-slate-700 border-slate-700"></i>
+                                            </div>
+                                        </button>
+                                    </form>
+                                </section>
+                            </div>
+                        </section>
+                    </div>
+    
+                    <div class="mt-4">
+                        <a href="#">
+                            <p class="font-bold">Gorgeous Wooden Gloves</p>
+                        </a>
+                        <section class="flex items-center tab__productContent mt-1">
+                            <form action="" class="text-slate-700 hover:text-sky-600 cursor-pointer transition-all duration-300 ease-in-out">
+                                <button type="submit" class="flex items-center gap-x-1">
+                                    <span class="iconify" data-icon="ant-design:shopping-cart-outlined"></span>
+                                    Add to cart
+                                </button>
+                            </form>
+                            <div class="flex items-center gap-x-2 transition-all duration-300 ease-in-out">
+                            <p class=" text-slate-500 text-sm line-through">$75.00</p>
+                            <p class="text-slate-700">$65.00</p>
+                        </div>
+                        </section>
+                    </div>
+                </section>
+                <section class="w-72 product__card relative p-5 pb-3 hover:shadow-lg hover:bg-white transition-all duration-300 ease-in-out overflow-x-hidden"  id="home__product1">
+                    <div class="relative">
+                        <a href="#">
+                            <section class="tab__productImg w-full h-60">
+                                <img class="w-full h-full object-cover shop__prodImg" data-src="{% static 'testImg/product.jpg' %}" alt="">
+                            </section>
+                        </a>
+    
+                        <section class="absolute product__options">
+                            <div class="flex items-center justify-center gap-x-2">
+                                <section onclick="quickView(1)" class="opacity-0 transition-all duration-300 ease-in-out quick__viewBtn">
+                                    <section class="relative bg-slate-800 px-3 py-2 hover:bg-rose-400 cursor-pointer product__option">
+                                        <span class="iconify text-slate-200 text-2xl" data-icon="bi:eye"></span>
+                                        <div class="absolute product__quickOptionContent product__quickOptionContent1 opacity-0 bg-slate-700 px-3 py-1 rounded-sm transition-opacity duration-300 ease-in-out">
+                                            <p class="text-sm text-slate-200 whitespace-nowrap">Quick View</p>
+                                            <i class="product__optionArrow product__optionArrow1 bg-slate-700 border-slate-700"></i>
+                                        </div>
+                                    </section>
+                                </section>
+                                <section class="opacity-0 transition-all duration-300 ease-in-out">
+                                    <form action="">
+                                        <button class="relative bg-slate-800 px-3 py-2 hover:bg-rose-400 cursor-pointer product__option">
+                                            <span
+                                                class="iconify text-slate-200 text-2xl"
+                                                data-icon="cil:heart"
+                                            ></span>
+                                            <div class="absolute product__quickOptionContent product__quickOptionContent2 opacity-0 bg-slate-700 px-3 py-1 rounded-sm transition-opacity duration-300 ease-in-out">
+                                                <p class="text-sm text-slate-200 whitespace-nowrap">Add to wishlist</p>
+                                                <i class="product__optionArrow product__optionArrow2 bg-slate-700 border-slate-700"></i>
+                                            </div>
+                                        </button>
+                                    </form>
+                                </section>
+                            </div>
+                        </section>
+                    </div>
+    
+                    <div class="mt-4">
+                        <a href="#">
+                            <p class="font-bold">Gorgeous Wooden Gloves</p>
+                        </a>
+                        <section class="flex items-center tab__productContent mt-1">
+                            <form action="" class="text-slate-700 hover:text-sky-600 cursor-pointer transition-all duration-300 ease-in-out">
+                                <button type="submit" class="flex items-center gap-x-1">
+                                    <span class="iconify" data-icon="ant-design:shopping-cart-outlined"></span>
+                                    Add to cart
+                                </button>
+                            </form>
+                            <div class="flex items-center gap-x-2 transition-all duration-300 ease-in-out">
+                            <p class=" text-slate-500 text-sm line-through">$75.00</p>
+                            <p class="text-slate-700">$65.00</p>
+                        </div>
+                        </section>
+                    </div>
+                </section>
+                <section class="w-72 product__card relative p-5 pb-3 hover:shadow-lg hover:bg-white transition-all duration-300 ease-in-out overflow-x-hidden"  id="home__product1">
+                    <div class="relative">
+                        <a href="#">
+                            <section class="tab__productImg w-full h-60">
+                                <img class="w-full h-full object-cover shop__prodImg" data-src="{% static 'testImg/product.jpg' %}" alt="">
+                            </section>
+                        </a>
+    
+                        <section class="absolute product__options">
+                            <div class="flex items-center justify-center gap-x-2">
+                                <section onclick="quickView(1)" class="opacity-0 transition-all duration-300 ease-in-out quick__viewBtn">
+                                    <section class="relative bg-slate-800 px-3 py-2 hover:bg-rose-400 cursor-pointer product__option">
+                                        <span class="iconify text-slate-200 text-2xl" data-icon="bi:eye"></span>
+                                        <div class="absolute product__quickOptionContent product__quickOptionContent1 opacity-0 bg-slate-700 px-3 py-1 rounded-sm transition-opacity duration-300 ease-in-out">
+                                            <p class="text-sm text-slate-200 whitespace-nowrap">Quick View</p>
+                                            <i class="product__optionArrow product__optionArrow1 bg-slate-700 border-slate-700"></i>
+                                        </div>
+                                    </section>
+                                </section>
+                                <section class="opacity-0 transition-all duration-300 ease-in-out">
+                                    <form action="">
+                                        <button class="relative bg-slate-800 px-3 py-2 hover:bg-rose-400 cursor-pointer product__option">
+                                            <span
+                                                class="iconify text-slate-200 text-2xl"
+                                                data-icon="cil:heart"
+                                            ></span>
+                                            <div class="absolute product__quickOptionContent product__quickOptionContent2 opacity-0 bg-slate-700 px-3 py-1 rounded-sm transition-opacity duration-300 ease-in-out">
+                                                <p class="text-sm text-slate-200 whitespace-nowrap">Add to wishlist</p>
+                                                <i class="product__optionArrow product__optionArrow2 bg-slate-700 border-slate-700"></i>
+                                            </div>
+                                        </button>
+                                    </form>
+                                </section>
+                            </div>
+                        </section>
+                    </div>
+    
+                    <div class="mt-4">
+                        <a href="#">
+                            <p class="font-bold">Gorgeous Wooden Gloves</p>
+                        </a>
+                        <section class="flex items-center tab__productContent mt-1">
+                            <form action="" class="text-slate-700 hover:text-sky-600 cursor-pointer transition-all duration-300 ease-in-out">
+                                <button type="submit" class="flex items-center gap-x-1">
+                                    <span class="iconify" data-icon="ant-design:shopping-cart-outlined"></span>
+                                    Add to cart
+                                </button>
+                            </form>
+                            <div class="flex items-center gap-x-2 transition-all duration-300 ease-in-out">
+                            <p class=" text-slate-500 text-sm line-through">$75.00</p>
+                            <p class="text-slate-700">$65.00</p>
+                        </div>
+                        </section>
+                    </div>
+                </section>
+                <section class="w-72 product__card relative p-5 pb-3 hover:shadow-lg hover:bg-white transition-all duration-300 ease-in-out overflow-x-hidden"  id="home__product1">
+                    <div class="relative">
+                        <a href="#">
+                            <section class="tab__productImg w-full h-60">
+                                <img class="w-full h-full object-cover shop__prodImg" data-src="{% static 'testImg/product.jpg' %}" alt="">
+                            </section>
+                        </a>
+    
+                        <section class="absolute product__options">
+                            <div class="flex items-center justify-center gap-x-2">
+                                <section onclick="quickView(1)" class="opacity-0 transition-all duration-300 ease-in-out quick__viewBtn">
+                                    <section class="relative bg-slate-800 px-3 py-2 hover:bg-rose-400 cursor-pointer product__option">
+                                        <span class="iconify text-slate-200 text-2xl" data-icon="bi:eye"></span>
+                                        <div class="absolute product__quickOptionContent product__quickOptionContent1 opacity-0 bg-slate-700 px-3 py-1 rounded-sm transition-opacity duration-300 ease-in-out">
+                                            <p class="text-sm text-slate-200 whitespace-nowrap">Quick View</p>
+                                            <i class="product__optionArrow product__optionArrow1 bg-slate-700 border-slate-700"></i>
+                                        </div>
+                                    </section>
+                                </section>
+                                <section class="opacity-0 transition-all duration-300 ease-in-out">
+                                    <form action="">
+                                        <button class="relative bg-slate-800 px-3 py-2 hover:bg-rose-400 cursor-pointer product__option">
+                                            <span
+                                                class="iconify text-slate-200 text-2xl"
+                                                data-icon="cil:heart"
+                                            ></span>
+                                            <div class="absolute product__quickOptionContent product__quickOptionContent2 opacity-0 bg-slate-700 px-3 py-1 rounded-sm transition-opacity duration-300 ease-in-out">
+                                                <p class="text-sm text-slate-200 whitespace-nowrap">Add to wishlist</p>
+                                                <i class="product__optionArrow product__optionArrow2 bg-slate-700 border-slate-700"></i>
+                                            </div>
+                                        </button>
+                                    </form>
+                                </section>
+                            </div>
+                        </section>
+                    </div>
+    
+                    <div class="mt-4">
+                        <a href="#">
+                            <p class="font-bold">Gorgeous Wooden Gloves</p>
+                        </a>
+                        <section class="flex items-center tab__productContent mt-1">
+                            <form action="" class="text-slate-700 hover:text-sky-600 cursor-pointer transition-all duration-300 ease-in-out">
+                                <button type="submit" class="flex items-center gap-x-1">
+                                    <span class="iconify" data-icon="ant-design:shopping-cart-outlined"></span>
+                                    Add to cart
+                                </button>
+                            </form>
+                            <div class="flex items-center gap-x-2 transition-all duration-300 ease-in-out">
+                            <p class=" text-slate-500 text-sm line-through">$75.00</p>
+                            <p class="text-slate-700">$65.00</p>
+                        </div>
+                        </section>
+                    </div>
+                </section>
+                <section class="w-72 product__card relative p-5 pb-3 hover:shadow-lg hover:bg-white transition-all duration-300 ease-in-out overflow-x-hidden"  id="home__product1">
+                    <div class="relative">
+                        <a href="#">
+                            <section class="tab__productImg w-full h-60">
+                                <img class="w-full h-full object-cover shop__prodImg" data-src="{% static 'testImg/product.jpg' %}" alt="">
+                            </section>
+                        </a>
+    
+                        <section class="absolute product__options">
+                            <div class="flex items-center justify-center gap-x-2">
+                                <section onclick="quickView(1)" class="opacity-0 transition-all duration-300 ease-in-out quick__viewBtn">
+                                    <section class="relative bg-slate-800 px-3 py-2 hover:bg-rose-400 cursor-pointer product__option">
+                                        <span class="iconify text-slate-200 text-2xl" data-icon="bi:eye"></span>
+                                        <div class="absolute product__quickOptionContent product__quickOptionContent1 opacity-0 bg-slate-700 px-3 py-1 rounded-sm transition-opacity duration-300 ease-in-out">
+                                            <p class="text-sm text-slate-200 whitespace-nowrap">Quick View</p>
+                                            <i class="product__optionArrow product__optionArrow1 bg-slate-700 border-slate-700"></i>
+                                        </div>
+                                    </section>
+                                </section>
+                                <section class="opacity-0 transition-all duration-300 ease-in-out">
+                                    <form action="">
+                                        <button class="relative bg-slate-800 px-3 py-2 hover:bg-rose-400 cursor-pointer product__option">
+                                            <span
+                                                class="iconify text-slate-200 text-2xl"
+                                                data-icon="cil:heart"
+                                            ></span>
+                                            <div class="absolute product__quickOptionContent product__quickOptionContent2 opacity-0 bg-slate-700 px-3 py-1 rounded-sm transition-opacity duration-300 ease-in-out">
+                                                <p class="text-sm text-slate-200 whitespace-nowrap">Add to wishlist</p>
+                                                <i class="product__optionArrow product__optionArrow2 bg-slate-700 border-slate-700"></i>
+                                            </div>
+                                        </button>
+                                    </form>
+                                </section>
+                            </div>
+                        </section>
+                    </div>
+    
+                    <div class="mt-4">
+                        <a href="#">
+                            <p class="font-bold">Gorgeous Wooden Gloves</p>
+                        </a>
+                        <section class="flex items-center tab__productContent mt-1">
+                            <form action="" class="text-slate-700 hover:text-sky-600 cursor-pointer transition-all duration-300 ease-in-out">
+                                <button type="submit" class="flex items-center gap-x-1">
+                                    <span class="iconify" data-icon="ant-design:shopping-cart-outlined"></span>
+                                    Add to cart
+                                </button>
+                            </form>
+                            <div class="flex items-center gap-x-2 transition-all duration-300 ease-in-out">
+                            <p class=" text-slate-500 text-sm line-through">$75.00</p>
+                            <p class="text-slate-700">$65.00</p>
+                        </div>
+                        </section>
+                    </div>
+                </section>
+                <section class="w-72 product__card relative p-5 pb-3 hover:shadow-lg hover:bg-white transition-all duration-300 ease-in-out overflow-x-hidden"  id="home__product1">
+                    <div class="relative">
+                        <a href="#">
+                            <section class="tab__productImg w-full h-60">
+                                <img class="w-full h-full object-cover shop__prodImg" data-src="{% static 'testImg/product.jpg' %}" alt="">
+                            </section>
+                        </a>
+    
+                        <section class="absolute product__options">
+                            <div class="flex items-center justify-center gap-x-2">
+                                <section onclick="quickView(1)" class="opacity-0 transition-all duration-300 ease-in-out quick__viewBtn">
+                                    <section class="relative bg-slate-800 px-3 py-2 hover:bg-rose-400 cursor-pointer product__option">
+                                        <span class="iconify text-slate-200 text-2xl" data-icon="bi:eye"></span>
+                                        <div class="absolute product__quickOptionContent product__quickOptionContent1 opacity-0 bg-slate-700 px-3 py-1 rounded-sm transition-opacity duration-300 ease-in-out">
+                                            <p class="text-sm text-slate-200 whitespace-nowrap">Quick View</p>
+                                            <i class="product__optionArrow product__optionArrow1 bg-slate-700 border-slate-700"></i>
+                                        </div>
+                                    </section>
+                                </section>
+                                <section class="opacity-0 transition-all duration-300 ease-in-out">
+                                    <form action="">
+                                        <button class="relative bg-slate-800 px-3 py-2 hover:bg-rose-400 cursor-pointer product__option">
+                                            <span
+                                                class="iconify text-slate-200 text-2xl"
+                                                data-icon="cil:heart"
+                                            ></span>
+                                            <div class="absolute product__quickOptionContent product__quickOptionContent2 opacity-0 bg-slate-700 px-3 py-1 rounded-sm transition-opacity duration-300 ease-in-out">
+                                                <p class="text-sm text-slate-200 whitespace-nowrap">Add to wishlist</p>
+                                                <i class="product__optionArrow product__optionArrow2 bg-slate-700 border-slate-700"></i>
+                                            </div>
+                                        </button>
+                                    </form>
+                                </section>
+                            </div>
+                        </section>
+                    </div>
+    
+                    <div class="mt-4">
+                        <a href="#">
+                            <p class="font-bold">Gorgeous Wooden Gloves</p>
+                        </a>
+                        <section class="flex items-center tab__productContent mt-1">
+                            <form action="" class="text-slate-700 hover:text-sky-600 cursor-pointer transition-all duration-300 ease-in-out">
+                                <button type="submit" class="flex items-center gap-x-1">
+                                    <span class="iconify" data-icon="ant-design:shopping-cart-outlined"></span>
+                                    Add to cart
+                                </button>
+                            </form>
+                            <div class="flex items-center gap-x-2 transition-all duration-300 ease-in-out">
+                            <p class=" text-slate-500 text-sm line-through">$75.00</p>
+                            <p class="text-slate-700">$65.00</p>
+                        </div>
+                        </section>
+                    </div>
+                </section>
+                <section class="w-72 product__card relative p-5 pb-3 hover:shadow-lg hover:bg-white transition-all duration-300 ease-in-out overflow-x-hidden"  id="home__product1">
+                    <div class="relative">
+                        <a href="#">
+                            <section class="tab__productImg w-full h-60">
+                                <img class="w-full h-full object-cover shop__prodImg" data-src="{% static 'testImg/product.jpg' %}" alt="">
+                            </section>
+                        </a>
+    
+                        <section class="absolute product__options">
+                            <div class="flex items-center justify-center gap-x-2">
+                                <section onclick="quickView(1)" class="opacity-0 transition-all duration-300 ease-in-out quick__viewBtn">
+                                    <section class="relative bg-slate-800 px-3 py-2 hover:bg-rose-400 cursor-pointer product__option">
+                                        <span class="iconify text-slate-200 text-2xl" data-icon="bi:eye"></span>
+                                        <div class="absolute product__quickOptionContent product__quickOptionContent1 opacity-0 bg-slate-700 px-3 py-1 rounded-sm transition-opacity duration-300 ease-in-out">
+                                            <p class="text-sm text-slate-200 whitespace-nowrap">Quick View</p>
+                                            <i class="product__optionArrow product__optionArrow1 bg-slate-700 border-slate-700"></i>
+                                        </div>
+                                    </section>
+                                </section>
+                                <section class="opacity-0 transition-all duration-300 ease-in-out">
+                                    <form action="">
+                                        <button class="relative bg-slate-800 px-3 py-2 hover:bg-rose-400 cursor-pointer product__option">
+                                            <span
+                                                class="iconify text-slate-200 text-2xl"
+                                                data-icon="cil:heart"
+                                            ></span>
+                                            <div class="absolute product__quickOptionContent product__quickOptionContent2 opacity-0 bg-slate-700 px-3 py-1 rounded-sm transition-opacity duration-300 ease-in-out">
+                                                <p class="text-sm text-slate-200 whitespace-nowrap">Add to wishlist</p>
+                                                <i class="product__optionArrow product__optionArrow2 bg-slate-700 border-slate-700"></i>
+                                            </div>
+                                        </button>
+                                    </form>
+                                </section>
+                            </div>
+                        </section>
+                    </div>
+    
+                    <div class="mt-4">
+                        <a href="#">
+                            <p class="font-bold">Gorgeous Wooden Gloves</p>
+                        </a>
+                        <section class="flex items-center tab__productContent mt-1">
+                            <form action="" class="text-slate-700 hover:text-sky-600 cursor-pointer transition-all duration-300 ease-in-out">
+                                <button type="submit" class="flex items-center gap-x-1">
+                                    <span class="iconify" data-icon="ant-design:shopping-cart-outlined"></span>
+                                    Add to cart
+                                </button>
+                            </form>
+                            <div class="flex items-center gap-x-2 transition-all duration-300 ease-in-out">
+                            <p class=" text-slate-500 text-sm line-through">$75.00</p>
+                            <p class="text-slate-700">$65.00</p>
+                        </div>
+                        </section>
+                    </div>
+                </section>
+                <section class="w-72 product__card relative p-5 pb-3 hover:shadow-lg hover:bg-white transition-all duration-300 ease-in-out overflow-x-hidden"  id="home__product1">
+                    <div class="relative">
+                        <a href="#">
+                            <section class="tab__productImg w-full h-60">
+                                <img class="w-full h-full object-cover shop__prodImg" data-src="{% static 'testImg/product.jpg' %}" alt="">
+                            </section>
+                        </a>
+    
+                        <section class="absolute product__options">
+                            <div class="flex items-center justify-center gap-x-2">
+                                <section onclick="quickView(1)" class="opacity-0 transition-all duration-300 ease-in-out quick__viewBtn">
+                                    <section class="relative bg-slate-800 px-3 py-2 hover:bg-rose-400 cursor-pointer product__option">
+                                        <span class="iconify text-slate-200 text-2xl" data-icon="bi:eye"></span>
+                                        <div class="absolute product__quickOptionContent product__quickOptionContent1 opacity-0 bg-slate-700 px-3 py-1 rounded-sm transition-opacity duration-300 ease-in-out">
+                                            <p class="text-sm text-slate-200 whitespace-nowrap">Quick View</p>
+                                            <i class="product__optionArrow product__optionArrow1 bg-slate-700 border-slate-700"></i>
+                                        </div>
+                                    </section>
+                                </section>
+                                <section class="opacity-0 transition-all duration-300 ease-in-out">
+                                    <form action="">
+                                        <button class="relative bg-slate-800 px-3 py-2 hover:bg-rose-400 cursor-pointer product__option">
+                                            <span
+                                                class="iconify text-slate-200 text-2xl"
+                                                data-icon="cil:heart"
+                                            ></span>
+                                            <div class="absolute product__quickOptionContent product__quickOptionContent2 opacity-0 bg-slate-700 px-3 py-1 rounded-sm transition-opacity duration-300 ease-in-out">
+                                                <p class="text-sm text-slate-200 whitespace-nowrap">Add to wishlist</p>
+                                                <i class="product__optionArrow product__optionArrow2 bg-slate-700 border-slate-700"></i>
+                                            </div>
+                                        </button>
+                                    </form>
+                                </section>
+                            </div>
+                        </section>
+                    </div>
+    
+                    <div class="mt-4">
+                        <a href="#">
+                            <p class="font-bold">Gorgeous Wooden Gloves</p>
+                        </a>
+                        <section class="flex items-center tab__productContent mt-1">
+                            <form action="" class="text-slate-700 hover:text-sky-600 cursor-pointer transition-all duration-300 ease-in-out">
+                                <button type="submit" class="flex items-center gap-x-1">
+                                    <span class="iconify" data-icon="ant-design:shopping-cart-outlined"></span>
+                                    Add to cart
+                                </button>
+                            </form>
+                            <div class="flex items-center gap-x-2 transition-all duration-300 ease-in-out">
+                            <p class=" text-slate-500 text-sm line-through">$75.00</p>
+                            <p class="text-slate-700">$65.00</p>
+                        </div>
+                        </section>
+                    </div>
+                </section>
+                <section class="w-72 product__card relative p-5 pb-3 hover:shadow-lg hover:bg-white transition-all duration-300 ease-in-out overflow-x-hidden"  id="home__product1">
+                    <div class="product__sale absolute bg-sky-600 px-2 py-0.5">
+                        <p class="text-slate-100 text-sm">Sale!</p>
+                    </div>
+    
+                    <div class="relative">
+                        <a href="#">
+                            <section class="tab__productImg w-full h-60">
+                                <img class="w-full h-full object-cover shop__prodImg" data-src="{% static 'testImg/product.jpg' %}" alt="">
+                            </section>
+                        </a>
+    
+                        <section class="absolute product__options">
+                            <div class="flex items-center justify-center gap-x-2">
+                                <section onclick="quickView(1)" class="opacity-0 transition-all duration-300 ease-in-out quick__viewBtn">
+                                    <section class="relative bg-slate-800 px-3 py-2 hover:bg-rose-400 cursor-pointer product__option">
+                                        <span class="iconify text-slate-200 text-2xl" data-icon="bi:eye"></span>
+                                        <div class="absolute product__quickOptionContent product__quickOptionContent1 opacity-0 bg-slate-700 px-3 py-1 rounded-sm transition-opacity duration-300 ease-in-out">
+                                            <p class="text-sm text-slate-200 whitespace-nowrap">Quick View</p>
+                                            <i class="product__optionArrow product__optionArrow1 bg-slate-700 border-slate-700"></i>
+                                        </div>
+                                    </section>
+                                </section>
+                                <section class="opacity-0 transition-all duration-300 ease-in-out">
+                                    <form action="">
+                                        <button class="relative bg-slate-800 px-3 py-2 hover:bg-rose-400 cursor-pointer product__option">
+                                            <span
+                                                class="iconify text-slate-200 text-2xl"
+                                                data-icon="cil:heart"
+                                            ></span>
+                                            <div class="absolute product__quickOptionContent product__quickOptionContent2 opacity-0 bg-slate-700 px-3 py-1 rounded-sm transition-opacity duration-300 ease-in-out">
+                                                <p class="text-sm text-slate-200 whitespace-nowrap">Add to wishlist</p>
+                                                <i class="product__optionArrow product__optionArrow2 bg-slate-700 border-slate-700"></i>
+                                            </div>
+                                        </button>
+                                    </form>
+                                </section>
+                            </div>
+                        </section>
+                    </div>
+    
+                    <div class="mt-4">
+                        <a href="#">
+                            <p class="font-bold">Gorgeous Wooden Gloves</p>
+                        </a>
+                        <section class="flex items-center tab__productContent mt-1">
+                            <form action="" class="text-slate-700 hover:text-sky-600 cursor-pointer transition-all duration-300 ease-in-out">
+                                <button type="submit" class="flex items-center gap-x-1">
+                                    <span class="iconify" data-icon="ant-design:shopping-cart-outlined"></span>
+                                    Add to cart
+                                </button>
+                            </form>
+                            <div class="flex items-center gap-x-2 transition-all duration-300 ease-in-out">
+                            <p class=" text-slate-500 text-sm line-through">$75.00</p>
+                            <p class="text-slate-700">$65.00</p>
+                        </div>
+                        </section>
+                    </div>
+                </section>
+                <section class="w-72 product__card relative p-5 pb-3 hover:shadow-lg hover:bg-white transition-all duration-300 ease-in-out overflow-x-hidden"  id="home__product1">
+                    <div class="relative">
+                        <a href="#">
+                            <section class="tab__productImg w-full h-60">
+                                <img class="w-full h-full object-cover shop__prodImg" data-src="{% static 'testImg/product.jpg' %}" alt="">
+                            </section>
+                        </a>
+    
+                        <section class="absolute product__options">
+                            <div class="flex items-center justify-center gap-x-2">
+                                <section onclick="quickView(1)" class="opacity-0 transition-all duration-300 ease-in-out quick__viewBtn">
+                                    <section class="relative bg-slate-800 px-3 py-2 hover:bg-rose-400 cursor-pointer product__option">
+                                        <span class="iconify text-slate-200 text-2xl" data-icon="bi:eye"></span>
+                                        <div class="absolute product__quickOptionContent product__quickOptionContent1 opacity-0 bg-slate-700 px-3 py-1 rounded-sm transition-opacity duration-300 ease-in-out">
+                                            <p class="text-sm text-slate-200 whitespace-nowrap">Quick View</p>
+                                            <i class="product__optionArrow product__optionArrow1 bg-slate-700 border-slate-700"></i>
+                                        </div>
+                                    </section>
+                                </section>
+                                <section class="opacity-0 transition-all duration-300 ease-in-out">
+                                    <form action="">
+                                        <button class="relative bg-slate-800 px-3 py-2 hover:bg-rose-400 cursor-pointer product__option">
+                                            <span
+                                                class="iconify text-slate-200 text-2xl"
+                                                data-icon="cil:heart"
+                                            ></span>
+                                            <div class="absolute product__quickOptionContent product__quickOptionContent2 opacity-0 bg-slate-700 px-3 py-1 rounded-sm transition-opacity duration-300 ease-in-out">
+                                                <p class="text-sm text-slate-200 whitespace-nowrap">Add to wishlist</p>
+                                                <i class="product__optionArrow product__optionArrow2 bg-slate-700 border-slate-700"></i>
+                                            </div>
+                                        </button>
+                                    </form>
+                                </section>
+                            </div>
+                        </section>
+                    </div>
+    
+                    <div class="mt-4">
+                        <a href="#">
+                            <p class="font-bold">Gorgeous Wooden Gloves</p>
+                        </a>
+                        <section class="flex items-center tab__productContent mt-1">
+                            <form action="" class="text-slate-700 hover:text-sky-600 cursor-pointer transition-all duration-300 ease-in-out">
+                                <button type="submit" class="flex items-center gap-x-1">
+                                    <span class="iconify" data-icon="ant-design:shopping-cart-outlined"></span>
+                                    Add to cart
+                                </button>
+                            </form>
+                            <div class="flex items-center gap-x-2 transition-all duration-300 ease-in-out">
+                            <p class=" text-slate-500 text-sm line-through">$75.00</p>
+                            <p class="text-slate-700">$65.00</p>
+                        </div>
+                        </section>
+                    </div>
+                </section>
+                {% comment %}Extra product section ends{% endcomment %}
+            </section>
+        </div>
+    </section>
+</div>
+{% endblock %}

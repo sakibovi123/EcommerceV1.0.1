@@ -1,0 +1,36 @@
+.cart__leftContent > table thead > tr > th,
+.cart__leftContent > table tbody > tr > td {
+    min-width: 12rem;
+}
+
+@media (min-width: 2000px) {
+    .cart__leftContent > table {
+        align-items: center;
+    }
+}
+
+@media (max-width: 991px) {
+    .cart__container > div {
+        display: grid;
+        grid-template-columns: 100%;
+    }
+
+    .cart__leftSection,
+    #summary {
+        width: 100%;
+    }
+}
+
+@media (max-width: 599px) {
+    .cart__leftHeader > h2,
+    .cart__leftHeader > h1 {
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .cart__leftHeader > h2,
+    .cart__leftHeader > h1 {
+        font-size: 1rem;
+    }
+}

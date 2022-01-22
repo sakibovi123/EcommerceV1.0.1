@@ -1,0 +1,169 @@
+{% extends "ecommerce/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/ecommerce/favouriteProducts.css' %}">
+
+<script src="{% static 'js/ecommerce/favouriteProducts.js' %}" defer></script>
+
+<section class="w-full bg-no-repeat bg-center relative bg-cover shop__bgSection mb-10">
+    <section class="flex flex-col items-center absolute">
+        <h5 class="font-bold text-4xl mb-4">Favourites</h5>
+        <div class="flex items-center gap-x-1 text-sm">
+            <a href="{% url 'home' %}" class="flex items-center gap-x-1 text-slate-600"><span class="iconify" data-icon="ant-design:home-outlined"></span> Home <span class="iconify" data-icon="akar-icons:chevron-right"></span></a>
+            <p class="text-slate-800">Favourites</p>
+        </div>
+    </section>
+</section>
+
+<div class="my-10">
+    <div class="container flex justify-center mx-auto">
+      <div class="flex flex-col overflow-x-auto">
+        <div class="w-full">
+          <div class="border-b border-gray-200 shadow">
+            <table>
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-6 py-2 text-sm text-gray-500"></th>
+                  <th class="px-6 py-2 text-sm text-gray-500">Name</th>
+                  <th class="px-6 py-2 text-sm text-gray-500">Price</th>
+                  <th class="px-6 py-2 text-sm text-gray-500">
+                    Added Date
+                  </th>
+                  <th class="px-6 py-2 text-sm text-gray-500">View</th>
+                  <th class="px-6 py-2 text-sm text-gray-500">Remove</th>
+                </tr>
+              </thead>
+              <tbody ref={wishlistProdRef} class="bg-white">
+                <tr class="whitespace-nowrap">
+                  <td class="px-6 py-4 text-gray-500">
+                    <section class="w-12 h-12">
+                      <a href="#">
+                        <img
+                          class="w-full h-full object-cover wishlist__prodImg"
+                          data-src="{% static 'testImg/product.jpg' %}"
+                          alt=""
+                        />
+                      </a>
+                    </section>
+                  </td>
+                  <td class="px-6 py-4">
+                    <div class=" text-center text-gray-900">
+                      <a href="#">Product Name</a>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <div class=" text-gray-500 flex items-center justify-center gap-x-2">
+                      <p class="text-sm line-through">$100</p>
+                      <p class="text-gray-900">$70</p>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4  text-gray-500">Jan 1, 2022</td>
+                  <td class="px-6 py-4">
+                    <a
+                      href="#"
+                      class="px-4 py-1 text-white bg-sky-500 rounded hover:bg-sky-600 transition-colors duration-300 ease-in-out"
+                    >
+                      View
+                    </a>
+                  </td>
+                  <td class="px-6 py-4">
+                    <form>
+                        <button type="submit" class="px-4 py-1 text-white bg-rose-500 rounded hover:bg-rose-600 transition-colors duration-300 ease-in-out">
+                        Remove
+                        </button>
+                    </form>
+                  </td>
+                </tr>
+
+                {% comment %} Extra section starts{% endcomment %}
+                <tr class="whitespace-nowrap">
+                  <td class="px-6 py-4 text-gray-500">
+                    <section class="w-12 h-12">
+                      <a href="#">
+                        <img
+                          class="w-full h-full object-cover wishlist__prodImg"
+                          data-src="{% static 'testImg/product.jpg' %}"
+                          alt=""
+                        />
+                      </a>
+                    </section>
+                  </td>
+                  <td class="px-6 py-4">
+                    <div class=" text-center text-gray-900">
+                      <a href="#">Product Name</a>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <div class=" text-gray-500 flex items-center justify-center gap-x-2">
+                      <p class="text-sm line-through">$100</p>
+                      <p class="text-gray-900">$70</p>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4  text-gray-500">Jan 1, 2022</td>
+                  <td class="px-6 py-4">
+                    <a
+                      href="#"
+                      class="px-4 py-1  text-white bg-sky-500 rounded hover:bg-sky-600 transition-colors duration-300 ease-in-out"
+                    >
+                      View
+                    </a>
+                  </td>
+                  <td class="px-6 py-4">
+                    <form>
+                        <button type="submit" class="px-4 py-1 text-white bg-rose-500 rounded hover:bg-rose-600 transition-colors duration-300 ease-in-out">
+                        Remove
+                        </button>
+                    </form>
+                  </td>
+                </tr>
+                <tr class="whitespace-nowrap">
+                  <td class="px-6 py-4 text-gray-500">
+                    <section class="w-12 h-12">
+                      <a href="#">
+                        <img
+                          class="w-full h-full object-cover wishlist__prodImg"
+                          data-src="{% static 'testImg/product.jpg' %}"
+                          alt=""
+                        />
+                      </a>
+                    </section>
+                  </td>
+                  <td class="px-6 py-4">
+                    <div class=" text-center text-gray-900">
+                      <a href="#">Product Name</a>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4">
+                    <div class=" text-gray-500 flex items-center justify-center gap-x-2">
+                      <p class="text-sm line-through">$100</p>
+                      <p class="text-gray-900">$70</p>
+                    </div>
+                  </td>
+                  <td class="px-6 py-4  text-gray-500">Jan 1, 2022</td>
+                  <td class="px-6 py-4">
+                    <a
+                      href="#"
+                      class="px-4 py-1  text-white bg-sky-500 rounded hover:bg-sky-600 transition-colors duration-300 ease-in-out"
+                    >
+                      View
+                    </a>
+                  </td>
+                  <td class="px-6 py-4">
+                    <form>
+                        <button type="submit" class="px-4 py-1 text-white bg-rose-500 rounded hover:bg-rose-600 transition-colors duration-300 ease-in-out">
+                        Remove
+                        </button>
+                    </form>
+                  </td>
+                </tr>
+                {% comment %} Extra section ends{% endcomment %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

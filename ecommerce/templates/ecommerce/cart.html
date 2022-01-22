@@ -1,0 +1,113 @@
+{% extends "ecommerce/base.html" %}
+{% load static %}
+{% load custom_filter %}
+
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'css/ecommerce/cart.css' %}">
+
+<div class="px-5 mt-10 cart__container">
+    <div class="flex shadow-md my-10">
+      <div class="w-3/4 bg-white px-10 py-10 cart__leftSection">
+        <div class="flex justify-between border-b pb-8 cart__leftHeader">
+          <h1 class="font-semibold text-2xl">Shopping Cart</h1>
+          <h2 class="font-semibold text-2xl">6 Items</h2>
+        </div>
+        <div class="overflow-y-hidden overflow-x-auto cart__leftContent">
+            <table class="w-full flex flex-col">
+                <thead class="mt-10 mb-5">
+                    <tr>
+                        <th class="font-semibold text-gray-600 text-sm uppercase w-2/5">Product Details</th>
+                        <th class="font-semibold text-gray-600 text-sm uppercase w-1/5">Quantity</th>
+                        <th class="font-semibold text-gray-600 text-sm uppercase w-1/5">Price</th>
+                        <th class="font-semibold text-gray-600 text-sm uppercase w-1/5">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if cart_products %}
+                    {% for c in cart_products %}
+                    <tr class="hover:bg-gray-100  mx-8 px-6 py-5">
+                        <td class="flex ml-3 my-3 cart__prodDetails">
+                            <div class="w-12">
+                                <img class="h-24 w-full object-cover" src="{{ c.product_image.url }}" alt="">
+                            </div>
+                            <form action="{% url 'deleteCart' %}" class="flex flex-col justify-between ml-4 flex-grow" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="product_id" value="{{ c.id }}">
+                                <span class="font-bold text-sm">Product name</span>
+                                <span class="text-slate-600 text-xs font-medium">Category name: {{ c.category.category_name }}</span>
+                                <input type="hidden" name="delete">
+                                <button type="submit" class="font-semibold hover:text-rose-500 w-8 text-left text-gray-500 text-xs">Remove</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="{% url 'MinusButton' %}" class="flex justify-center" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="product_id" value="{{ c.id }}">
+                                 <input hidden type="number" name="minus" value="-1">
+                                <button type="submit">
+                                    <svg class="fill-current text-gray-600 w-3" viewBox="0 0 448 512"><path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"/>
+                                    </svg>
+                                </button>
+
+                                <div class="select-none">
+                                    <p class="mx-2 border text-center w-8">{{ c|cart_quantity:request.session.cart }}</p>
+                                </div>
+                            </form>
+                            <form action="{% url 'PlusButton' %}" class="flex justify-center" method="POST">
+                                {% csrf_token %}
+                                <input type="hidden" name="product_id" value="{{ c.id }}">
+                                <button type="submit">
+                                    <svg class="fill-current text-gray-600 w-3" viewBox="0 0 448 512">
+                                    <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"/>
+                                    </svg>
+                                </button>
+                            </form>
+                        </td>
+                        {% if c.sale_price %}
+                        <td class="text-center w-1/5 font-semibold text-sm">${{ c.sale_price }}</td>
+                        {% else %}<td class="text-center w-1/5 font-semibold text-sm">${{ c.regular_price }}</td>{% endif %}
+                        <td class="text-center w-1/5 font-semibold text-sm">${{ c|cart_total:request.session.cart }}</td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}No Products Found!{% endif %}
+
+                    <!--
+                </tbody>
+            </table>
+        </div>
+
+
+        <a href="{% url 'shop' %}" class="flex font-semibold text-sky-500 text-sm mt-10 w-40">
+
+          <svg class="fill-current mr-2 text-sky-500 w-4" viewBox="0 0 448 512"><path d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z"/></svg>
+          Continue Shopping
+        </a>
+      </div>
+
+      <div id="summary" class="w-1/4 px-8 py-10">
+        <h1 class="font-semibold text-2xl border-b pb-8">Order Summary</h1>
+        <div class="flex justify-between mt-10 mb-5">
+          <span class="font-semibold text-sm uppercase">Items 6</span>
+          <span class="font-semibold text-sm">$2000</span>
+        </div>
+        <form action="">
+            <div class="pt-5 pb-10">
+            <label for="promo" class="font-semibold inline-block mb-3 text-sm uppercase">Promo Code</label>
+            <input type="text" id="promo" placeholder="Enter your code" class="p-2 text-sm w-full outline-none">
+            </div>
+            <button type="submit" class="bg-red-500 hover:bg-red-600 px-5 py-2 text-sm text-white uppercase transition-colors duration-300 ease-in-out">Apply</button>
+        </form>
+        <div class="border-t mt-8">
+          <div class="flex font-semibold justify-between py-6 text-sm uppercase">
+            <span>Total cost</span>
+            <span>$2000</span>
+          </div>
+          <a href="#" class="flex justify-center items-center bg-green-500 font-semibold hover:bg-green-600 py-3 text-sm text-white uppercase w-full transition-colors duration-300 ease-in-out">Checkout</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  {% endblock %}

@@ -1,0 +1,25 @@
+.registration__mainSection {
+    height: calc(100vh - 10vh);
+}
+
+.login__mainSection {
+    height: calc(100vh - 20vh);
+}
+
+@media (max-width: 980px) {
+    .registrationCard {
+        width: 60%;
+    }
+}
+
+@media (max-width: 700px) {
+    .registrationCard {
+        width: 70%;
+    }
+}
+
+@media (max-width: 550px) {
+    .registrationCard {
+        width: 85%;
+    }
+}

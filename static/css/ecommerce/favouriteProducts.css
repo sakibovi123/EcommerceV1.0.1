@@ -1,0 +1,20 @@
+.shop__bgSection {
+    background-image: url("../../testImg/shopbg.jpg"),
+      linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+    background-blend-mode: overlay;
+    height: 50vh;
+  }
+  
+  .shop__bgSection > section {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+.wishlist__leftSection {
+    grid-template-columns: 30% 70%;
+}
+
+.wish__leftSectionImg {
+    aspect-ratio: auto 1200/1200;
+}

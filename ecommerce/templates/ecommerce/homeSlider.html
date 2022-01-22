@@ -1,0 +1,91 @@
+{% load static %}
+
+<section>
+    <div class="home__banner relative bg-white overflow-hidden">
+        {% comment %}Not more than 3 sliders{% endcomment %}
+        {% comment %} slider looping starts here {% endcomment %}
+        {% if sliders|length > 0 %}
+            {% comment %}First slider starts{% endcomment %}
+            {% if first_slider %}
+            <section class="w-full home__bannerSection home__banner1">
+                <div class="absolute home__sliderContent home__sliderContent1 font-bold">
+                    <p class="text-4xl text-rose-500">New Collection</p>
+                    <p class="my-4 text-7xl">Relax &amp; Recharge</p>
+                    <a href="#" class="flex items-center gap-x-1 relative bg-sky-500 text-slate-200 p-3 w-1/2 banner__shopNowText">
+                        Shop Now <span class="iconify" data-icon="bi:arrow-right"></span>
+                    </a>
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="w-3/5 home__sliderLeftImg home__sliderLeftImg1">
+                        <img class="w-full h-full object-cover" src="{{ first_slider.slider_image.url }}" alt="">
+                    </div>
+                    <div class="w-1/4 home__sliderRightImg home__sliderRightImg1 pr-4">
+                        <img class="w-full h-full object-cover" src="{{ first_slider.slider_image.url }}" alt="">
+                    </div>
+                </div>
+            </section>
+            {% endif %}
+            {% comment %}First slider ends{% endcomment %}
+
+            {% comment %}Second slider starts{% endcomment %}
+            {% if second_slider %}
+            <section class="w-full home__bannerSection home__banner2">
+                <div class="absolute home__sliderContent home__sliderContent2 font-bold">
+                    <p class="text-4xl text-rose-500">New Collection</p>
+                    <p class="my-4 text-7xl">New Arrival Of 2022</p>
+                    <a href="#" class="flex items-center gap-x-1 relative bg-sky-500 text-slate-200 p-3 w-1/2 banner__shopNowText">
+                        Shop Now <span class="iconify" data-icon="bi:arrow-right"></span>
+                    </a>
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="w-3/5 home__sliderLeftImg home__sliderLeftImg2">
+                        <img class="w-full h-full object-cover" src="{{ second_slider.slider_image.url }}" alt="">
+                    </div>
+                    <div class="w-1/4 home__sliderRightImg home__sliderRightImg2 pr-4">
+                        <img class="w-full h-full object-cover" src="{{ second_slider.slider_image.url }}" alt="">
+                    </div>
+                </div>
+            </section>
+            {% endif %}
+            {% comment %}Second slider ends{% endcomment %}
+
+            {% comment %}Third slider starts{% endcomment %}
+            {% if third_slider %}
+            <section class="w-full home__bannerSection home__banner3">
+                <div class="absolute home__sliderContent home__sliderContent3 font-bold">
+                    <p class="text-4xl text-rose-500">Cold Winter</p>
+                    <p class="my-4 text-7xl">Sale Up 50% Off</p>
+                    <a href="#" class="flex items-center gap-x-1 relative bg-sky-500 text-slate-200 p-3 w-1/2 banner__shopNowText">
+                        Shop Now <span class="iconify" data-icon="bi:arrow-right"></span>
+                    </a>
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="w-3/5 home__sliderLeftImg home__sliderLeftImg3">
+                        <img class="w-full h-full object-cover" src="{{ third_slider.slider_image.url }}" alt="">
+                    </div>
+                    <div class="w-1/4 home__sliderRightImg home__sliderRightImg3 pr-4">
+                        <img class="w-full h-full object-cover" src="{{ third_slider.slider_image.url }}" alt="">
+                    </div>
+                </div>
+            </section>
+            {% endif %}
+            {% comment %}Third slider ends{% endcomment %}
+        {% endif %}
+    </div>
+
+    <input type="hidden" value="{{ slider_length }}" id="slider__length">
+
+    <section class="mt-10">
+        <div class="flex items-center justify-end gap-x-5 text-lg md:text-2xl font-bold">
+            {% if first_slider %}
+                <button class="active__bannerBorder w-12 banner1">1</button>
+            {% endif %}
+            {% if second_slider %}
+                <button class="w-12 banner2">2</button>
+            {% endif %}
+            {% if third_slider %}
+                <button class="w-12 banner3">3</button>
+            {% endif %}
+        </div>
+    </section>
+</section>
